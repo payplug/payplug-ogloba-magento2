@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Payplug - https://www.payplug.com/
+ * Copyright © Payplug. All rights reserved.
+ * See LICENSE for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Payplug\Ogloba\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+            <argument name="config" xsi:type="object">Payplug\Ogloba\Gateway\Config\Ogloba\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Payplug\Ogloba\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">payplugOglobaLogger</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">Payplug\Ogloba\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Payplug\Ogloba\Gateway\Config\Ogloba">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Payplug\Ogloba\Gateway\Config\Ogloba::METHOD_CODE</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="PayplugPaymentsOglobaAdapter" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">Payplug\Ogloba\Gateway\Config\Ogloba::METHOD_CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Magento\Payment\Block\Info</argument>
+            <argument name="valueHandlerPool" xsi:type="object">PayplugPaymentsOglobaValueHandlerPool</argument>
+            <argument name="validatorPool" xsi:type="object">PayplugPaymentsOglobaValidatorPool</argument>
+            <argument name="commandPool" xsi:type="object">PayplugPaymentsOglobaCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayplugPaymentsOglobaCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="order" xsi:type="string">Payplug\Ogloba\Gateway\Command\CreatePaymentCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayplugPaymentsOglobaValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">PayplugPaymentsOglobaConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="PayplugPaymentsOglobaConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">Payplug\Ogloba\Gateway\Config\Ogloba</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="PayplugOglobaCountryValidator" type="Magento\Payment\Gateway\Validator\CountryValidator">
+        <arguments>
+            <argument name="config" xsi:type="object">Payplug\Ogloba\Gateway\Config\Ogloba</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="PayplugPaymentsOglobaValidatorPool" type="Magento\Payment\Gateway\Validator\ValidatorPool">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="country" xsi:type="string">PayplugOglobaCountryValidator</item>
+                <item name="currency" xsi:type="string">Payplug\Ogloba\Gateway\Validator\CurrencyValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+</config>

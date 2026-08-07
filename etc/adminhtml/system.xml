@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Payplug - https://www.payplug.com/
+ * Copyright © Payplug. All rights reserved.
+ * See LICENSE for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="payment">
+            <group id="payplug_payments_ogloba" translate="label" type="text" sortOrder="20" showInDefault="1"
+                   showInWebsite="1" showInStore="1">
+                <label>PayPlug Payments - Ogloba KDO</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1"
+                       showInStore="0" canRestore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/payplug_payments_ogloba/active</config_path>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1"
+                       showInStore="1" canRestore="1">
+                    <label>Title</label>
+                    <config_path>payment/payplug_payments_ogloba/title</config_path>
+                </field>
+                <field id="description" translate="label comment" type="textarea" sortOrder="30" showInDefault="1"
+                       showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Description</label>
+                    <comment>Shown to the customer in the checkout when this payment method is selected.</comment>
+                    <config_path>payment/payplug_payments_ogloba/description</config_path>
+                </field>
+                <field id="order_status" translate="label" type="select" sortOrder="40" showInDefault="1"
+                       showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>New Order Status</label>
+                    <source_model>Payplug\Ogloba\Model\Config\Source\Order\Status\PendingPayment</source_model>
+                    <config_path>payment/payplug_payments_ogloba/order_status</config_path>
+                </field>
+                <field id="allowspecific" translate="label" type="allowspecific" sortOrder="50" showInDefault="1"
+                       showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Payment from Applicable Countries</label>
+                    <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                    <config_path>payment/payplug_payments_ogloba/allowspecific</config_path>
+                </field>
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="60" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
+                    <label>Payment from Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                    <config_path>payment/payplug_payments_ogloba/specificcountry</config_path>
+                    <depends>
+                        <field id="allowspecific">1</field>
+                    </depends>
+                </field>
+                <field id="min_order_total" translate="label" type="text" sortOrder="70" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
+                    <label>Minimum Order Total</label>
+                    <frontend_class>validate-number validate-zero-or-greater</frontend_class>
+                    <config_path>payment/payplug_payments_ogloba/min_order_total</config_path>
+                </field>
+                <field id="max_order_total" translate="label" type="text" sortOrder="80" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
+                    <label>Maximum Order Total</label>
+                    <frontend_class>validate-number validate-zero-or-greater</frontend_class>
+                    <config_path>payment/payplug_payments_ogloba/max_order_total</config_path>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1"
+                       showInStore="0" canRestore="1">
+                    <label>Sort Order</label>
+                    <frontend_class>validate-number</frontend_class>
+                    <config_path>payment/payplug_payments_ogloba/sort_order</config_path>
+                </field>
+                <group id="api" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1"
+                       showInStore="0">
+                    <label>Ogloba API</label>
+                    <field id="environment" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                           showInWebsite="1" showInStore="0" canRestore="1">
+                        <label>Environment</label>
+                        <comment>Selects which host the payment orders are sent to.</comment>
+                        <source_model>Payplug\Ogloba\Model\Config\Source\Environment</source_model>
+                        <config_path>payment/payplug_payments_ogloba/environment</config_path>
+                    </field>
+                    <field id="host_staging" translate="label comment" type="text" sortOrder="20" showInDefault="1"
+                           showInWebsite="1" showInStore="0">
+                        <label>Staging Host</label>
+                        <comment>Base URL without trailing slash, e.g. https://staging.example.com</comment>
+                        <config_path>payment/payplug_payments_ogloba/host_staging</config_path>
+                    </field>
+                    <field id="host_production" translate="label comment" type="text" sortOrder="30" showInDefault="1"
+                           showInWebsite="1" showInStore="0">
+                        <label>Production Host</label>
+                        <comment>Base URL without trailing slash, e.g. https://api.example.com</comment>
+                        <config_path>payment/payplug_payments_ogloba/host_production</config_path>
+                    </field>
+                    <field id="merchant_id" translate="label" type="text" sortOrder="40" showInDefault="1"
+                           showInWebsite="1" showInStore="0">
+                        <label>Merchant ID</label>
+                        <config_path>payment/payplug_payments_ogloba/merchant_id</config_path>
+                    </field>
+                    <field id="payment_page_id" translate="label" type="text" sortOrder="50" showInDefault="1"
+                           showInWebsite="1" showInStore="0">
+                        <label>Payment Page ID</label>
+                        <config_path>payment/payplug_payments_ogloba/payment_page_id</config_path>
+                    </field>
+                    <field id="hmac_key" translate="label comment" type="obscure" sortOrder="60" showInDefault="1"
+                           showInWebsite="1" showInStore="0">
+                        <label>HMAC Key</label>
+                        <comment>Private shared secret used to sign outgoing requests and verify notifications.</comment>
+                        <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                        <config_path>payment/payplug_payments_ogloba/hmac_key</config_path>
+                    </field>
+                    <field id="debug" translate="label comment" type="select" sortOrder="70" showInDefault="1"
+                           showInWebsite="1" showInStore="0" canRestore="1">
+                        <label>Debug Mode</label>
+                        <comment>Logs the full request and response payloads in var/log/payplug_ogloba.log.</comment>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/payplug_payments_ogloba/debug</config_path>
+                    </field>
+                </group>
+                <group id="notifications" translate="label" type="text" sortOrder="110" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
+                    <label>Operator Notifications</label>
+                    <field id="notify_success" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                           showInWebsite="1" showInStore="0" canRestore="1">
+                        <label>Notify Successful Transaction</label>
+                        <comment>Sends a confirmation email to the operator on successful payment.</comment>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/payplug_payments_ogloba/notify_success</config_path>
+                    </field>
+                    <field id="notify_failure" translate="label comment" type="select" sortOrder="20" showInDefault="1"
+                           showInWebsite="1" showInStore="0" canRestore="1">
+                        <label>Notify Failed Transaction</label>
+                        <comment>Sends an alert to the operator on failed payment.</comment>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/payplug_payments_ogloba/notify_failure</config_path>
+                    </field>
+                </group>
+            </group>
+        </section>
+    </system>
+</config>
