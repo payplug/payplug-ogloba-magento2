@@ -1,0 +1,80 @@
+<?php
+/**
+ * Payplug - https://www.payplug.com/
+ * Copyright © Payplug. All rights reserved.
+ * See LICENSE for license details.
+ */
+
+declare(strict_types=1);
+
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Element\Template;
+use Payplug\Ogloba\ViewModel\Log;
+
+/** @var Template $block */
+/** @var Escaper $escaper */
+
+/** @var Log $viewModel */
+$viewModel = $block->getViewModel();
+$lines = $viewModel->getLines();
+$filter = $viewModel->getFilter();
+?>
+<div class="payplug-ogloba-log">
+    <?php if ($viewModel->isDebugEnabled() === false): ?>
+        <div class="message message-warning">
+            <?= $escaper->escapeHtml(
+                __('Debug Mode is off: the log tells what happened, without the API payloads.')
+            ) ?>
+            <a href="<?= $escaper->escapeUrl($viewModel->getConfigUrl()) ?>">
+                <?= $escaper->escapeHtml(__('Turn it on in the payment configuration.')) ?>
+            </a>
+        </div>
+    <?php endif; ?>
+
+    <form action="<?= $escaper->escapeUrl($viewModel->getFormUrl()) ?>" method="get"
+          class="payplug-ogloba-log__form">
+        <div class="payplug-ogloba-log__field">
+            <select name="<?= $escaper->escapeHtmlAttr(Log::PARAM_LINES) ?>" id="payplug_ogloba_log_lines"
+                    class="admin__control-select">
+                <?php foreach ($viewModel->getLineCounts() as $lineCount): ?>
+                    <option value="<?= $escaper->escapeHtmlAttr((string) $lineCount) ?>"
+                        <?= $lineCount === $viewModel->getLineCount() ? 'selected="selected"' : '' ?>>
+                        <?= $escaper->escapeHtml((string) $lineCount) ?> <?= $escaper->escapeHtml(__('Lines')) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="payplug-ogloba-log__field">
+            <input type="text" name="<?= $escaper->escapeHtmlAttr(Log::PARAM_FILTER) ?>"
+                   id="payplug_ogloba_log_filter" class="admin__control-text"
+                   value="<?= $escaper->escapeHtmlAttr($filter) ?>"
+                   placeholder="<?= $escaper->escapeHtmlAttr(__('An order number, an operation, anything')) ?>"/>
+        </div>
+        <button type="submit" class="action-default scalable">
+            <span><?= $escaper->escapeHtml(__('Refresh')) ?></span>
+        </button>
+    </form>
+
+    <p class="payplug-ogloba-log__path">
+        <?= $escaper->escapeHtml(
+            __('Last %1 lines of %2, the most recent first.', $viewModel->getLineCount(), $viewModel->getLogPath())
+        ) ?>
+    </p>
+
+    <?php if ($lines === []): ?>
+        <div class="message message-notice">
+            <?php if ($filter !== ''): ?>
+                <?= $escaper->escapeHtml(__('No line matching "%1" in the end of the log.', $filter)) ?>
+            <?php else: ?>
+                <?= $escaper->escapeHtml(__('The log is empty, or has not been written yet.')) ?>
+            <?php endif; ?>
+        </div>
+    <?php else: ?>
+        <div class="payplug-ogloba-log__output">
+            <?php foreach ($lines as $line): ?>
+                <?php $lineClass = 'payplug-ogloba-log__line ' . $viewModel->getLineModifier($line); ?>
+                <div class="<?= $escaper->escapeHtmlAttr($lineClass) ?>"><?= $escaper->escapeHtml($line) ?></div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+</div>

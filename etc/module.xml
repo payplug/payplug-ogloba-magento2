@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Payplug - https://www.payplug.com/
+ * Copyright © Payplug. All rights reserved.
+ * See LICENSE for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Payplug_Ogloba">
+        <sequence>
+            <module name="Magento_Sales"/>
+            <module name="Magento_Payment"/>
+            <module name="Magento_Checkout"/>
+        </sequence>
+    </module>
+</config>
