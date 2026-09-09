@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - A refund covering only part of what was paid reads as partially refunded.
 - Admin configuration: method settings, plus the Ogloba environment, hosts, ids and HMAC key.
 - Ogloba calls give up after 5 s without a connection, 10 s in the checkout and 30 s for a refund.
+- The payment order answer is a 302 carrying the payload, read as it comes rather than followed.
 - Luma checkout renderer, the customer being redirected to the Ogloba payment page.
 - Notification and customer return share a single `Service\ResolvePayment`: one verdict, one path.
 - The Ogloba operation is the payment transaction id, so both channels find the order on an indexed match.

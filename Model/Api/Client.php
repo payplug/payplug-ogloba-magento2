@@ -27,7 +27,8 @@ class Client
     private const DEFAULT_TIMEOUT = 30;
     private const PAYMENT_TIMEOUT = 10;
     private const CONNECT_TIMEOUT = 5;
-    private const HTTP_OK = 200;
+    private const HTTP_LOWEST_SUCCESS = 200;
+    private const HTTP_LOWEST_ERROR = 400;
     private const RESPONSE_ERROR_KEY = 'error';
     private const RESPONSE_REDIRECT_URL_KEY = 'redirectURL';
     private const RESPONSE_TEMP_ORDER_SEQNO_KEY = 'tempOrderSeqno';
@@ -181,7 +182,7 @@ class Client
         $this->logger->info(sprintf('Order %s - response %d from Ogloba.', $incrementId, $status));
         $this->logger->debug(sprintf('Order %s - response body %s', $incrementId, $responseBody));
 
-        if ($status !== self::HTTP_OK) {
+        if (!$this->isAnswered($status)) {
             $this->logger->error(sprintf(
                 'Order %s - unexpected HTTP status %d from %s, body: %s',
                 $incrementId,
@@ -206,6 +207,22 @@ class Client
         }
 
         return $response;
+    }
+
+    /**
+     * Tell whether Ogloba answered with a payload of its own
+     *
+     * The payment order endpoint answers 302, the redirection being how Ogloba hands the payment page
+     * over, and carries its usual JSON payload in the body of that very response. cURL is deliberately
+     * left without CURLOPT_FOLLOWLOCATION so the payload is read rather than the payment page it points
+     * to. Every status below 400 is therefore taken as an answer, its body deciding the outcome.
+     *
+     * @param int $status
+     * @return bool
+     */
+    private function isAnswered(int $status): bool
+    {
+        return $status >= self::HTTP_LOWEST_SUCCESS && $status < self::HTTP_LOWEST_ERROR;
     }
 
     /**
