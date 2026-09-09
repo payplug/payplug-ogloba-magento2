@@ -1,0 +1,21 @@
+<?php
+/**
+ * Payplug - https://www.payplug.com/
+ * Copyright © Payplug. All rights reserved.
+ * See LICENSE for license details.
+ */
+
+declare(strict_types=1);
+
+namespace Payplug\Ogloba\Model\Config\Source\Order\Status;
+
+use Magento\Sales\Model\Config\Source\Order\Status;
+use Magento\Sales\Model\Order;
+
+class PendingPayment extends Status
+{
+    /**
+     * @var string
+     */
+    protected $_stateStatuses = Order::STATE_PENDING_PAYMENT;
+}
