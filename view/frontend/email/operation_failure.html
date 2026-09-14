@@ -1,0 +1,41 @@
+<!--
+/**
+ * Payplug - https://www.payplug.com/
+ * Copyright © Payplug. All rights reserved.
+ * See LICENSE for license details.
+ */
+-->
+
+<!--@subject {{trans "Ogloba payment failed - order %increment_id" increment_id=$data.increment_id}} @-->
+<!--@vars {
+"var data.message":"Message",
+"var data.increment_id":"Order increment ID",
+"var data.store_name":"Store name",
+"var data.customer_email":"Customer email",
+"var data.grand_total":"Order total",
+"var data.status":"Ogloba payment status",
+"var data.operation_id":"Ogloba payment operation ID",
+"var data.payment_method_order_id":"Ogloba order ID",
+"var data.channel":"Resolved by",
+"var data.response_label":"API message"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+
+<p><strong>{{var data.message}}</strong></p>
+
+<table cellspacing="0" cellpadding="4" border="0">
+    <tr><td><strong>{{trans "Order"}}</strong></td><td>{{var data.increment_id}}</td></tr>
+    <tr><td><strong>{{trans "Store"}}</strong></td><td>{{var data.store_name}}</td></tr>
+    <tr><td><strong>{{trans "Customer"}}</strong></td><td>{{var data.customer_email}}</td></tr>
+    <tr><td><strong>{{trans "Total"}}</strong></td><td>{{var data.grand_total}}</td></tr>
+    <tr><td><strong>{{trans "Ogloba payment status"}}</strong></td><td>{{var data.status}}</td></tr>
+    <tr><td><strong>{{trans "Ogloba payment operation ID"}}</strong></td><td>{{var data.operation_id}}</td></tr>
+    <tr><td><strong>{{trans "Ogloba order ID"}}</strong></td><td>{{var data.payment_method_order_id}}</td></tr>
+    <tr><td><strong>{{trans "Resolved by"}}</strong></td><td>{{var data.channel}}</td></tr>
+    {{depend data.response_label}}
+    <tr><td><strong>{{trans "API message"}}</strong></td><td>{{var data.response_label}}</td></tr>
+    {{/depend}}
+</table>
+
+{{template config_path="design/email/footer_template"}}
