@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Payplug - https://www.payplug.com/
+ * Copyright © Payplug. All rights reserved.
+ * See LICENSE for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="sales_order_payment_place_end">
+        <observer name="payplug_ogloba_set_order_state_to_pending_payment"
+                  instance="Payplug\Ogloba\Observer\SetOrderStateToPendingPayment"/>
+    </event>
+    <event name="payment_method_is_active">
+        <observer name="payplug_ogloba_disable_on_unsupported_currency"
+                  instance="Payplug\Ogloba\Observer\DisableOnUnsupportedCurrency"/>
+    </event>
+</config>

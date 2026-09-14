@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Payplug - https://www.payplug.com/
+ * Copyright © Payplug. All rights reserved.
+ * See LICENSE for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <payplug_payments_ogloba>
+                <model>PayplugPaymentsOglobaAdapter</model>
+                <active>0</active>
+                <title>Ogloba Gift Card</title>
+                <description>Pay for your order with your Ogloba gift card.</description>
+                <order_status>pending_payment</order_status>
+                <allowspecific>0</allowspecific>
+                <sort_order>10</sort_order>
+                <is_gateway>1</is_gateway>
+                <payment_action>order</payment_action>
+                <can_use_checkout>1</can_use_checkout>
+                <can_use_internal>0</can_use_internal>
+                <can_order>1</can_order>
+                <can_authorize>0</can_authorize>
+                <can_capture>0</can_capture>
+                <can_capture_partial>0</can_capture_partial>
+                <can_void>0</can_void>
+                <can_cancel>1</can_cancel>
+                <can_refund>1</can_refund>
+                <can_refund_partial_per_invoice>1</can_refund_partial_per_invoice>
+                <can_fetch_transaction_information>0</can_fetch_transaction_information>
+                <environment>staging</environment>
+                <debug>0</debug>
+                <notify_success>0</notify_success>
+                <notify_failure>0</notify_failure>
+            </payplug_payments_ogloba>
+        </payment>
+    </default>
+</config>

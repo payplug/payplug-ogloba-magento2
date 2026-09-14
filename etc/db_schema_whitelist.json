@@ -1,0 +1,7 @@
+{
+    "sales_payment_transaction": {
+        "index": {
+            "PAYPLUG_OGLOBA_SALES_PAYMENT_TRANSACTION_TXN_ID": true
+        }
+    }
+}
